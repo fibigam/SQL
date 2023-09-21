@@ -1,0 +1,61 @@
+/* I have created multiple tables in this project revealing information about famous singers, their most sold album, and who they have collaborated with.*/
+
+/* This project is written using SQL and utilized data from the followng singers datasets (please see queries and explanation below):
+
+
+CREATE TABLE singers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullname TEXT,
+    birthdate TEXT,
+    nationality TEXT);
+    
+INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Taylor Swift", "12-13-1989", "USA");
+INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Ariana Grande", "06-26-1993", "USA");
+INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Adele", "05-05-1988", "UK");
+INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Justin Bieber", "03-01-1994", "CA");
+INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Ed Sheeran", "02-17-1991", "UK");
+INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Beyonce", "09-04-1981", "US");
+INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Bruno Mars", "10-08-1985", "US");
+
+CREATE TABLE most_sold_album (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    singers_id INTEGER,
+    title TEXT,
+    sold_copies TEXT,
+    album_of_the_year_winner BIT);
+
+INSERT INTO most_sold_album (singers_id, title, sold_copies, album_of_the_year_winner) VALUES (1, "1989", "14 million", 1);
+INSERT INTO most_sold_album (singers_id, title, sold_copies, album_of_the_year_winner) VALUES (2, "Thank U, Next", "4 million", 0);
+INSERT INTO most_sold_album (singers_id, title, sold_copies, album_of_the_year_winner) VALUES (3, "21", "30 million", 1);
+INSERT INTO most_sold_album (singers_id, title, sold_copies, album_of_the_year_winner) VALUES (4, "Purpose", "14 million", 0);
+INSERT INTO most_sold_album (singers_id, title, sold_copies, album_of_the_year_winner) VALUES (5, "X", "7 million", 0);
+INSERT INTO most_sold_album (singers_id, title, sold_copies, album_of_the_year_winner) VALUES (6, "I am Sasha Fierce", "10 milion", 0);
+INSERT INTO most_sold_album (singers_id, title, sold_copies, album_of_the_year_winner) VALUES (7, "Doo-Woops & Hooligans", "11 million", 0);
+
+CREATE TABLE collaboration (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  singers1_id INTEGER,
+  singers2_id INTEGER);
+  
+INSERT INTO collaboration (singers1_id, singers2_id) VALUES (1, 5);
+INSERT INTO collaboration (singers1_id, singers2_id) VALUES (2, 4);
+INSERT INTO collaboration (singers1_id, singers2_id) VALUES (4, 5);
+INSERT INTO collaboration (singers1_id, singers2_id) VALUES (5, 7);
+INSERT INTO collaboration (singers1_id, singers2_id) VALUES (5, 6);
+
+
+/*This query returns a dataset that displays the singers name and their most sold album by combining information from singers and most sold album table*/
+SELECT singers.fullname as Artists, most_sold_album.title AS Albums
+FROM singers
+JOIN most_sold_album 
+ON singers.id = most_sold_album.singers_id;
+
+
+/* This query returns a dataset that displays who the singers have collaborated with by joining singers and collaboration table*/
+SELECT a.fullname as Artists, b.fullname as Artists
+FROM collaboration
+JOIN singers a
+ON collaboration.singers1_id = a.id
+JOIN singers b
+ON collaboration.singers2_id = b.id;
+
