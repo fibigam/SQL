@@ -1,6 +1,6 @@
 /* I have created multiple tables in this project revealing information about famous singers, their most sold album, and who they have collaborated with.*/
 
-/* This project is written using SQL and utilized data from the followng singers datasets (please see queries and explanation below):
+/* This project is written using Standard SQL and utilized data from the followng singers datasets (please see queries and explanation below):
 
 
 CREATE TABLE singers (
@@ -9,13 +9,13 @@ CREATE TABLE singers (
     birthdate TEXT,
     nationality TEXT);
     
-INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Taylor Swift", "12-13-1989", "USA");
-INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Ariana Grande", "06-26-1993", "USA");
-INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Adele", "05-05-1988", "UK");
-INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Justin Bieber", "03-01-1994", "CA");
-INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Ed Sheeran", "02-17-1991", "UK");
-INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Beyonce", "09-04-1981", "US");
-INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Bruno Mars", "10-08-1985", "US");
+INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Taylor Swift", "1989-12-13", "USA");
+INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Ariana Grande", "1993-06-26", "USA");
+INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Adele", "1988-05-05", "UK");
+INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Justin Bieber", "1994-03-01", "CA");
+INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Ed Sheeran", "1991-92-17", "UK");
+INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Beyonce", "1981-09-04", "US");
+INSERT INTO singers (fullname, birthdate, nationality) VALUES ("Bruno Mars", "1985-10-08", "US");
 
 CREATE TABLE most_sold_album (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
