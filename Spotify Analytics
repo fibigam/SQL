@@ -1,0 +1,117 @@
+# For this project, I downloaded Spotify data from Kaggle.
+# Then I created a table to insert Spotify data into.
+# Finally, I performed analytics on the data using SQL. 
+
+#Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL 
+)
+
+#Then I inserted the Spotify Data .csv into the table.
+
+#Next, I explored the data using the following SQL:
+
+
+/*Who are the top 5 artists based on popularity?*/
+SELECT artist_name, popularity
+FROM Spotifydata
+ORDER BY popularity DESC
+LIMIT 5;
+
+/*What are the 10 least popular songs?*/
+SELECT track_name
+FROM Spotifydata
+ORDER BY popularity
+LIMIT 10;
+
+/* What is the longest song and who released it?*/
+SELECT artist_name, MAX(duration_ms), track_name
+FROM Spotifydata;
+
+/*What songs have a collaboration (feat) on it*/
+SELECT track_name
+FROM Spotifydata
+WHERE track_name LIKE "%feat%";
+
+/*Which songs has "the" in it*/
+SELECT track_name
+FROM Spotifydata
+WHERE track_name LIKE "%the%";
+
+/*What is the average tempo of all the songs?*/
+SELECT AVG(tempo)
+FROM Spotifydata;
+
+/*What is the valence percentile of each songs?*/
+WITH Percentiles AS (
+    SELECT track_name, 
+    valence, PERCENT_RANK() OVER( ORDER BY valence) AS Percent_Rank 
+    FROM Spotifydata
+)
+SELECT * FROM Percentiles;
+
+/* divided the dataset in three groups based on their valence taking into account 
+the percentile value, how many songs have a positive, neutral, or negative mood*/
+
+SELECT count(valence),
+CASE 
+    WHEN valence BETWEEN 0.679 AND 0.958 THEN "positive"
+    WHEN valence BETWEEN 0.442 AND 0.679 THEN "neutral"
+    ELSE "negative"
+END AS "song_mood"
+FROM Spotifydata
+GROUP BY "song_mood";
+
+/*divided the dataset into three groups based on their valence taking into account the percentile value, which song has a positive, neutral, and negative mood*/
+SELECT artist_name, track_name,
+CASE 
+    WHEN valence BETWEEN 0.679 AND 0.958 THEN "positive"
+    WHEN valence BETWEEN 0.442 AND 0.679 THEN "neutral"
+    ELSE "negative"
+END AS "song_mood"
+FROM Spotifydata
+GROUP BY track_name
+ORDER BY song_mood;
+
+/*What is the danceability percentile of each songs?*/
+WITH Percentiles AS (
+    SELECT  danceability, 
+    PERCENT_RANK() OVER (ORDER BY danceability) AS Percent_Rank
+    FROM Spotifydata)
+SELECT * FROM Percentiles;
+
+/* divided the dataset into two groups based on their danceability taking into account the percentile value, how many songs have most and least danceability*/
+SELECT count(danceability),
+CASE
+    WHEN danceability >= 0.714 THEN "easier song to dance to"
+    WHEN danceability < 0.714 THEN "harder song to dance to"
+END AS "danceable"
+FROM Spotifydata
+GROUP BY danceable;
+
+/*divided the dataset into two groups based on their danceability taking into account the percentile value, which tracks have the most danceability and the least danceability*/
+SELECT artist_name, track_name,
+CASE
+    WHEN danceability >= 0.714 THEN "easier song to dance to"
+    WHEN danceability < 0.714 THEN "harder song to dance to"
+END AS "danceable"
+FROM Spotifydata
+GROUP BY track_name
+ORDER BY danceable;
