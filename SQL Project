@@ -2,12 +2,10 @@
 --The following SQL was written to answer specific questions about the content on chinook:
 
 /* 1. Show Customers (their full names, customer ID, and country) who are not in the US.*/
-
 SELECT FirstName || ' ' || LastName AS FullName,
 CustomerId, Country
 FROM Chinook.Customers
 WHERE Country <> 'USA';
-
 
 /* 2. Show only the Customers from Brazil.*/
 SELECT *
@@ -63,6 +61,7 @@ SELECT ROUND(sum(total), 2) AS "Total Sales"
 FROM chinook.Invoices
 WHERE InvoiceDate BETWEEN "2009-01-01" AND "2009-12-31";
 
+
 /* 10. Write a query that includes the purchased track name with each invoice line ID.*/
 SELECT t.Name, i.InvoiceLineId
 FROM chinook.Invoice_items i
@@ -96,6 +95,7 @@ ON t.MediaTypeID=m.MediaTypeID
 
 JOIN chinook.Genres g
 ON t.GenreID=g.GenreID;
+
 
 /* 13. Show the total sales made by each sales agent.*/
 SELECT emp.FirstName, emp.LastName,
